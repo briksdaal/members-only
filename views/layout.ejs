@@ -4,9 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/stylesheets/style.css" />
-    <title><%= title %></title>
+    <title><%= locals.title %></title>
   </head>
   <body>
+    <header>
+      <div class="inner-header">
+        <h2>Members Only Club</h2>
+        <div class="links">
+          <ul>
+            <li>
+              <a href="/register">Register</a>
+            </li>
+            <li>
+              <% if (!locals.user) { %>
+              <a href="/login">Login</a>
+              <% } else { %>
+              <a href="/logout">Logout</a>
+              <% } %>
+            </li>
+          </ul>
+        </div>
+        <div class="user"></div>
+      </div>
+    </header>
     <main><%-body%></main>
   </body>
 </html>
