@@ -18,12 +18,12 @@ exports.verify_admin_post = [
       });
     }
 
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.user._id).exec();
 
     await User.findByIdAndUpdate(req.user, {
       membershipStatus: 'Verified',
       admin: true,
-    });
+    }).exec();
 
     res.redirect('/');
   }),

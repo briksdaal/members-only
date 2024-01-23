@@ -18,11 +18,11 @@ exports.verify_post = [
       });
     }
 
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.user._id).exec();
 
     await User.findByIdAndUpdate(req.user, {
       membershipStatus: 'Verified',
-    });
+    }).exec();
 
     res.redirect('/');
   }),

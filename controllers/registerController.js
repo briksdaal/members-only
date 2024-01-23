@@ -24,7 +24,7 @@ exports.register_post = [
     .isLength({ min: 1 })
     .withMessage('Email must not be empty')
     .custom(async (val) => {
-      const userExists = await User.findOne({ email: val });
+      const userExists = await User.findOne({ email: val }).exec();
       if (userExists) {
         throw new Error('User with email already exists');
       }

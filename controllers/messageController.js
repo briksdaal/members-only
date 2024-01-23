@@ -76,7 +76,7 @@ exports.message_delete_post = [
       return res.redirect('/');
     }
 
-    await Message.findByIdAndDelete(req.body['message-id']);
+    await Message.findByIdAndDelete(req.body['message-id']).exec();
     res.redirect('/');
   }),
 ];

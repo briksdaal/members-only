@@ -10,7 +10,7 @@ const customFields = {
 
 async function verifyCallback(username, password, done) {
   try {
-    const user = await User.findOne({ email: username });
+    const user = await User.findOne({ email: username }).exec();
     if (!user) {
       return done(null, false, {
         message: 'You have entered an invalid username or password',
@@ -42,7 +42,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await User.findById(id);
+    const user = await User.findById(id).exec();
     done(null, user);
   } catch (err) {
     done(err);
