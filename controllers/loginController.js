@@ -9,7 +9,6 @@ exports.login_get = asyncHandler((req, res, next) => {
   if (req.isAuthenticated()) {
     return res.redirect('/');
   }
-  console.log(req.user);
   const loginError = req.session.messages
     ? req.session.messages[req.session.messages.length - 1]
     : null;
@@ -45,6 +44,6 @@ exports.login_post = [
   passport.authenticate('local', {
     failureRedirect: '/login',
     failureMessage: true,
-    successRedirect: '/',
+    successRedirect: '/verify',
   }),
 ];

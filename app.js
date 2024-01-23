@@ -54,8 +54,13 @@ require('./passportConfig');
 app.use(passport.initialize());
 app.use(passport.session());
 
-/* Routes */
+/* Set user in locals */
+app.use((req, res, next) => {
+  res.locals.user = req.user;
+  next();
+});
 
+/* Routes */
 app.use('/', indexRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
