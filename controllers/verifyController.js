@@ -4,12 +4,12 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user');
 require('dotenv').config();
 
-/* Display new user verify form on GET */
+/* Display user verify form on GET */
 exports.verify_get = asyncHandler((req, res, next) => {
   res.render('verify-form');
 });
 
-/* Handle new user verify on POST */
+/* Handle user verify on POST */
 exports.verify_post = [
   body('secret').trim().escape(),
   asyncHandler(async (req, res, next) => {
