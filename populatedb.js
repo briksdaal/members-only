@@ -1,4 +1,5 @@
 var debug = require('debug')('membersonly:populate');
+const bcrypt = require('bcrypt');
 
 // import models
 const User = require('./models/user');
@@ -36,7 +37,15 @@ async function clearDb() {
 }
 
 async function userCreate(index, firstname, lastname, email, password) {
-  const user = new User({ firstname, lastname, email, password });
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const user = new User({
+    firstname,
+    lastname,
+    email,
+    password: hashedPassword,
+  });
+
   await user.save();
   users[index] = user;
   debug(`Added User: ${user.fullname}`);
