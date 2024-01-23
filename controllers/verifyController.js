@@ -11,9 +11,9 @@ exports.verify_get = asyncHandler((req, res, next) => {
 
 /* Handle new user verify on POST */
 exports.verify_post = [
-  body(secret).trim().escape(),
+  body('secret').trim().escape(),
   asyncHandler(async (req, res, next) => {
-    if (secret !== process.env.secret) {
+    if (req.body.secret !== process.env.secret) {
       return res.render('verify-form', { error: "That's not the secret..." });
     }
 

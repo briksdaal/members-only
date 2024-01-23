@@ -2,10 +2,22 @@ const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
+const passport = require('passport');
 
 /* Dispaly login form on GET */
 exports.login_get = asyncHandler((req, res, next) => {
-  res.render('login-form');
+  if (req.isAuthenticated()) {
+    return res.redirect('/');
+  }
+  console.log(req.user);
+  const loginError = req.session.messages
+    ? req.session.messages[req.session.messages.length - 1]
+    : null;
+  const errorArr = loginError ? [{ msg: loginError }] : null;
+
+  res.render('login-form', {
+    errors: errorArr,
+  });
 });
 
 /* Handle login attempt on POST */
@@ -28,17 +40,11 @@ exports.login_post = [
         errors: errors.array(),
       });
     }
-
-    res.send('logged in');
+    next();
+  }),
+  passport.authenticate('local', {
+    failureRedirect: '/login',
+    failureMessage: true,
+    successRedirect: '/',
   }),
 ];
-
-/* Display new user verify form on GET */
-exports.verify_get = asyncHandler((req, res, next) => {
-  res.send('Verify get');
-});
-
-/* Handle new user verify on POST */
-exports.verify_post = asyncHandler((req, res, next) => {
-  res.send('Verify post');
-});

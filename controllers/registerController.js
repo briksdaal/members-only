@@ -3,10 +3,12 @@ const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
 
+/* Dispaly new user register form on GET */
 exports.register_get = asyncHandler((req, res, next) => {
   res.render('register-form');
 });
 
+/* Handle new user create on POST */
 exports.register_post = [
   body('firstname', 'First name must not be empty')
     .trim()
@@ -51,23 +53,17 @@ exports.register_post = [
       });
     }
 
-    bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
-      if (err) {
-        return res.render('register-form', {
-          errors: [{ msg: 'errors happening' }],
-        });
-      }
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
-      const user = new User({
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        email: req.body.email,
-        password: hashedPassword,
-      });
-
-      await user.save();
-
-      res.redirect('/');
+    const user = new User({
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      email: req.body.email,
+      password: hashedPassword,
     });
+
+    await user.save();
+
+    res.redirect('/');
   }),
 ];

@@ -4,13 +4,20 @@ var expressLayouts = require('express-ejs-layouts');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const passport = require('passport');
+const session = require('express-session');
+require('dotenv').config();
 
-var indexRouter = require('./routes/index');
-var registerRouter = require('./routes/register');
+const MongoStore = require('connect-mongo');
+
+const indexRouter = require('./routes/index');
+const registerRouter = require('./routes/register');
+const loginRouter = require('./routes/login');
+const verifyRouter = require('./routes/verify');
 
 var app = express();
 
-const db = require('./mongooseconnection')();
+const db = require('./mongooseconnection');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,8 +31,35 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+/* Sessions */
+const sessionStore = MongoStore.create({
+  client: db.getClient(),
+  collectionName: 'sessions',
+});
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    store: sessionStore,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
+    },
+  })
+);
+
+/* Passport */
+require('./passportConfig');
+app.use(passport.initialize());
+app.use(passport.session());
+
+/* Routes */
+
 app.use('/', indexRouter);
 app.use('/register', registerRouter);
+app.use('/login', loginRouter);
+app.use('/verify', verifyRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
