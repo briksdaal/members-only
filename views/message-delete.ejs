@@ -1,0 +1,14 @@
+<h1>Delete Message <%= message._id %></h1>
+<h3><%= message.title %></h3>
+<p><%- message.content.replaceAll('\r\n', '<br />') %></p>
+<h4><%= message.by.fullname %></h4>
+<h4><%= message.ddmmyy_dateBought %></h4>
+<form method="POST">
+  <input
+    type="hidden"
+    id="message-id"
+    name="message-id"
+    value="<%= message._id %>"
+  />
+  <button type="submit">Delete</button>
+</form>

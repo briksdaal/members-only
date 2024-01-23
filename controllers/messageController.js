@@ -54,14 +54,29 @@ exports.message_create_post = [
 
 exports.message_delete_get = [
   adminGuard,
-  asyncHandler((req, res, next) => {
-    res.send('message_delete_get');
+  asyncHandler(async (req, res, next) => {
+    const message = await Message.findById(req.params.id)
+      .populate('by', 'firstname lastname')
+      .exec();
+
+    if (!message) {
+      return res.redirect('/');
+    }
+
+    res.render('message-delete', { message });
   }),
 ];
 
 exports.message_delete_post = [
   adminGuard,
-  asyncHandler((req, res, next) => {
-    res.send('message_delete_post');
+  asyncHandler(async (req, res, next) => {
+    const message = await Message.findById(req.params.id).exec();
+
+    if (!message) {
+      return res.redirect('/');
+    }
+
+    await Message.findByIdAndDelete(req.body['message-id']);
+    res.redirect('/');
   }),
 ];

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { DateTime } = require('luxon');
 
 const Schema = mongoose.Schema;
 
@@ -15,6 +16,12 @@ const MessageSchema = new Schema({
 
 MessageSchema.virtual('deleteurl').get(function () {
   return `/messages/${this._id}/delete`;
+});
+
+MessageSchema.virtual('ddmmyy_dateBought').get(function () {
+  return this.createdAt
+    ? DateTime.fromJSDate(this.createdAt).toFormat("dd'/'MM'/'yy")
+    : '';
 });
 
 module.exports = mongoose.model('Message', MessageSchema);
