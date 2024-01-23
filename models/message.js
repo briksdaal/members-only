@@ -13,4 +13,8 @@ const MessageSchema = new Schema({
   },
 });
 
+MessageSchema.virtual('deleteurl').get(function () {
+  return `/messages/${this._id}/delete`;
+});
+
 module.exports = mongoose.model('Message', MessageSchema);

@@ -1,1 +1,24 @@
-Test test
+<h1>Messages</h1>
+<% if (locals.message_list) { %>
+<div class="all-messages-container">
+  <% message_list.forEach((message) => { %>
+  <div class="single-message-container">
+    <div class="message-data">
+      <h3><%= message.title %></h3>
+      <p><%= message.content %></p>
+      <% if (locals.user?.isMember) { %>
+      <div class="author-and-date">
+        <h4><%= message.by.fullname %></h4>
+        <h4><%= message.createdAt %></h4>
+      </div>
+      <% } %>
+    </div>
+    <% if (locals.user?.admin) {%>
+    <div class="delete-message-container">
+      <a href="<%= message.deleteurl %>">Delete Message</a>
+    </div>
+    <% } %>
+  </div>
+  <% }) %>
+</div>
+<% } %>
