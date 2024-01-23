@@ -1,0 +1,15 @@
+<h2>Enter the secret passcode to get into the club and verify your account.</h2>
+<form method="POST">
+  <label for="secret"
+    ><input name="secret" id="secret" type="password"
+  /></label>
+  <button type="submit">Verify</button>
+</form>
+
+<% if (locals.errors) { %>
+<div class="errors-container">
+  <% errors.forEach((err) => { %>
+  <li><%= err.msg %></li>
+  <% }) %>
+</div>
+<% } %>
