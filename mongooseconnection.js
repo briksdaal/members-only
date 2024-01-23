@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const debug = require('debug')('membersonly:db');
+require('dotenv').config();
 
 const User = require('./models/user');
 const Message = require('./models/message');

@@ -6,6 +6,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const passport = require('passport');
 const session = require('express-session');
+var compression = require('compression');
+var helmet = require('helmet');
+const RateLimit = require('express-rate-limit');
 require('dotenv').config();
 
 const MongoStore = require('connect-mongo');
@@ -25,16 +28,31 @@ const db = require('./mongooseconnection');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
 app.use(expressLayouts);
 
+// Apply rate limiter to all requests
+const limiter = RateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 100,
+});
+app.use(limiter);
+
+// Compress all routes
+app.use(compression());
+
+// Secure response headers
+app.use(helmet());
+
+// Logs
 app.use(logger('dev'));
+
+// Parsing and express configs
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-/* Sessions */
+// Sessions
 const sessionStore = MongoStore.create({
   client: db.getClient(),
   collectionName: 'sessions',
@@ -52,18 +70,18 @@ app.use(
   })
 );
 
-/* Passport */
+// Passport
 require('./passportConfig');
 app.use(passport.initialize());
 app.use(passport.session());
 
-/* Set user in locals */
+// Set user in locals
 app.use((req, res, next) => {
   res.locals.user = req.user;
   next();
 });
 
-/* Routes */
+// Routes
 app.use('/', indexRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
