@@ -10,7 +10,7 @@ exports.message_list = asyncHandler((req, res, next) => {
 exports.message_create_get = [
   authGuard,
   asyncHandler((req, res, next) => {
-    res.render('message-form');
+    res.render('message-form', { title: 'Create New Message' });
   }),
 ];
 
@@ -31,6 +31,7 @@ exports.message_create_post = [
       };
 
       return res.render('message-form', {
+        title: 'Create New Message',
         messageForRerender,
         errors: errors.array(),
       });
@@ -63,7 +64,7 @@ exports.message_delete_get = [
       return res.redirect('/');
     }
 
-    res.render('message-delete', { message });
+    res.render('message-delete', { title: 'Delete Message', message });
   }),
 ];
 

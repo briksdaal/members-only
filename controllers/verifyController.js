@@ -5,7 +5,7 @@ require('dotenv').config();
 
 /* Display user verify form on GET */
 exports.verify_get = asyncHandler((req, res, next) => {
-  res.render('verify-form');
+  res.render('verify-form', { title: 'Verify Membership' });
 });
 
 /* Handle user verify on POST */
@@ -14,6 +14,7 @@ exports.verify_post = [
   asyncHandler(async (req, res, next) => {
     if (req.body.secret !== process.env.CLUB_SECRET) {
       return res.render('verify-form', {
+        title: 'Verify Membership',
         errors: [{ msg: "That's not the secret..." }],
       });
     }

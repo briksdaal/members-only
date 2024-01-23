@@ -12,6 +12,7 @@ exports.login_get = asyncHandler((req, res, next) => {
   const errorArr = loginError ? [{ msg: loginError }] : null;
 
   res.render('login-form', {
+    title: 'Log In',
     errors: errorArr,
   });
 });
@@ -32,6 +33,7 @@ exports.login_post = [
       };
 
       return res.render('login-form', {
+        title: 'Log In',
         userForRerender,
         errors: errors.array(),
       });

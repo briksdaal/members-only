@@ -6,7 +6,7 @@ const User = require('../models/user');
 
 /* Dispaly new user register form on GET */
 exports.register_get = asyncHandler((req, res, next) => {
-  res.render('register-form');
+  res.render('register-form', { title: 'Register New User' });
 });
 
 /* Handle new user create on POST */
@@ -49,6 +49,7 @@ exports.register_post = [
       };
 
       return res.render('register-form', {
+        title: 'Register New User',
         userForRerender,
         errors: errors.array(),
       });

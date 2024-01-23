@@ -5,7 +5,7 @@ require('dotenv').config();
 
 /* Display user verify as admin form on GET */
 exports.verify_admin_get = asyncHandler((req, res, next) => {
-  res.render('verify-admin-form');
+  res.render('verify-admin-form', { title: 'Verify Admin' });
 });
 
 /* Handle user verify as admin on POST */
@@ -14,6 +14,7 @@ exports.verify_admin_post = [
   asyncHandler(async (req, res, next) => {
     if (req.body.secret !== process.env.ADMIN_SECRET) {
       return res.render('verify-admin-form', {
+        title: 'Verify Admin',
         errors: [{ msg: "That's not the admin secret..." }],
       });
     }
