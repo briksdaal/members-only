@@ -6,9 +6,6 @@ const passport = require('passport');
 
 /* Dispaly login form on GET */
 exports.login_get = asyncHandler((req, res, next) => {
-  if (req.isAuthenticated()) {
-    return res.redirect('/');
-  }
   const loginError = req.session.messages
     ? req.session.messages[req.session.messages.length - 1]
     : null;
