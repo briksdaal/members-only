@@ -72,7 +72,7 @@ async function createMessages() {
   await Promise.all([
     messageCreate(
       'Meeting Tomorrow',
-      "Let's discuss the agenda for tomorrow's meeting. Your updates and ideas are crucial. Please come prepared!",
+      "Let's discuss the agenda for tomorrow's meeting.\r\nYour updates and ideas are crucial.\r\nPlease come prepared!",
       (() => {
         const date = new Date();
         date.setDate(date.getDate() - 15);
@@ -82,7 +82,7 @@ async function createMessages() {
     ),
     messageCreate(
       'Project Update',
-      "Here's a comprehensive update on the project progress. We're on track for the next milestone. Let's keep up the momentum!",
+      "Here's a comprehensive update on the project progress.\r\nWe're on track for the next milestone.\r\nLet's keep up the momentum!",
       (() => {
         const date = new Date();
         date.setDate(date.getDate() - 10);
@@ -92,7 +92,7 @@ async function createMessages() {
     ),
     messageCreate(
       'Coffee Break',
-      "Take a break and join us for a casual coffee session in the office lounge. It's an excellent opportunity to connect with colleagues. Your presence will add to the warmth of our team!",
+      "Take a break and join us for a casual coffee session in the office lounge.\r\nIt's an excellent opportunity to connect with colleagues.\r\nYour presence will add to the warmth of our team!",
       (() => {
         const date = new Date();
         date.setDate(date.getDate() - 7);
@@ -102,7 +102,7 @@ async function createMessages() {
     ),
     messageCreate(
       'New Feature Announcement',
-      'Exciting news! A new feature is ready for deployment. Stay tuned for the official announcement. Your feedback is highly valued!',
+      'Exciting news! A new feature is ready for deployment.\r\nStay tuned for the official announcement.\r\nYour feedback is highly valued!',
       (() => {
         const date = new Date();
         date.setDate(date.getDate() - 5);
@@ -112,7 +112,7 @@ async function createMessages() {
     ),
     messageCreate(
       'Team Building Event',
-      "Get ready for an unforgettable team building event next week. Your participation is key to making this event a success. Let's make lasting memories together!",
+      "Get ready for an unforgettable team building event next week.\r\nYour participation is key to making this event a success.\r\nLet's make lasting memories together!",
       (() => {
         const date = new Date();
         date.setDate(date.getDate() - 12);
