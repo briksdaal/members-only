@@ -12,6 +12,7 @@ const UserSchema = new Schema({
     enum: ['Verified', 'Unverified'],
     default: 'Unverified',
   },
+  admin: { type: Boolean, default: false },
 });
 
 UserSchema.virtual('fullname').get(function () {

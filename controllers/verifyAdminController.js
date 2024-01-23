@@ -3,18 +3,18 @@ const { body, validationResult } = require('express-validator');
 const User = require('../models/user');
 require('dotenv').config();
 
-/* Display user verify form on GET */
-exports.verify_get = asyncHandler((req, res, next) => {
-  res.render('verify-form');
+/* Display user verify as admin form on GET */
+exports.verify_admin_get = asyncHandler((req, res, next) => {
+  res.render('verify-admin-form');
 });
 
-/* Handle user verify on POST */
-exports.verify_post = [
+/* Handle user verify as admin on POST */
+exports.verify_admin_post = [
   body('secret').trim().escape(),
   asyncHandler(async (req, res, next) => {
-    if (req.body.secret !== process.env.CLUB_SECRET) {
-      return res.render('verify-form', {
-        errors: [{ msg: "That's not the secret..." }],
+    if (req.body.secret !== process.env.ADMIN_SECRET) {
+      return res.render('verify-admin-form', {
+        errors: [{ msg: "That's not the admin secret..." }],
       });
     }
 
@@ -22,6 +22,7 @@ exports.verify_post = [
 
     await User.findByIdAndUpdate(req.user, {
       membershipStatus: 'Verified',
+      admin: true,
     });
 
     res.redirect('/');

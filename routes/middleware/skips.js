@@ -6,3 +6,10 @@ exports.skipIfVerified = asyncHandler((req, res, next) => {
   }
   next();
 });
+
+exports.skipIfAdmin = asyncHandler((req, res, next) => {
+  if (req.user.admin) {
+    res.redirect('/');
+  }
+  next();
+});

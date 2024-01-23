@@ -1,0 +1,15 @@
+<h2>Enter the admin secret passcode to get administrator privileges.</h2>
+<form method="POST">
+  <label for="secret"
+    ><input name="secret" id="secret" type="password"
+  /></label>
+  <button type="submit">Verify As Admin</button>
+</form>
+
+<% if (locals.errors) { %>
+<div class="errors-container">
+  <% errors.forEach((err) => { %>
+  <li><%= err.msg %></li>
+  <% }) %>
+</div>
+<% } %>

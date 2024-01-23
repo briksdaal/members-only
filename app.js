@@ -15,6 +15,7 @@ const registerRouter = require('./routes/register');
 const loginRouter = require('./routes/login');
 const logoutRouter = require('./routes/logout');
 const verifyRouter = require('./routes/verify');
+const verifyAdminRouter = require('./routes/verifyAdmin');
 
 var app = express();
 
@@ -67,6 +68,7 @@ app.use('/register', registerRouter);
 app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
 app.use('/verify', verifyRouter);
+app.use('/verify-admin', verifyAdminRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
