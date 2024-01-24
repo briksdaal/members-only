@@ -1,8 +1,8 @@
+<% if (locals.user?.isMember) { %>
 <div class="new-message-container">
-  <% if (locals.user?.isMember) { %>
-  <a href="/messages/create">Create New Message</a>
-  <% } %>
+  <a href="/messages/create">+ Create New Message</a>
 </div>
+<% } %>
 <h1>Messages</h1>
 <% if (locals.message_list) { %>
 <div class="all-messages-container">
